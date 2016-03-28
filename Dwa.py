@@ -3,7 +3,9 @@ import time
 sensorData = serial.Serial('COM4',9600)#115200)
 #sensorData= serial.Serial('com11',115200) # Create senorData object to read serial port data coming from arduino
 import matplotlib.pyplot as plt
-#RAZZ
+
+#Pozdrawiam z Bieszczas lub Marsa
+
 class Obserwator:
     def __init__(self):
         self.x = 20
