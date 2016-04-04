@@ -1,4 +1,18 @@
 TODO:
 1. Poprawa okienka
 2. Cala reszta!!!
-3. Cala reszta i jescze wiêcej reszty.
+3. Cala reszta i jescze wiÃªcej reszty.
+4. Filtr Kalmana
+  #sam KalmanGain
+  #macierz komariancji:
+    w predykcji 
+    w ogole :)
+5. Ogarniecie macierzy A: model silnika krokowego?
+6. Merta mowil, ze to i tak bez sensu bo trzeba przejsc do Z albo uzywac ZOHa. Nie mam pojecia o co chodzi.
+      #nie mowil persolanie, a na wykladzie
+7. Filtr komplementarny, co to jest, lol?
+8. Co robic z landmarkami?
+  #jakos zaprzasc do tego ransaca?
+
+
+9. Loop closing
