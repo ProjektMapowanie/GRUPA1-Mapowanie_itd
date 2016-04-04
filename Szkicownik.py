@@ -1,10 +1,13 @@
-import serial as serial
-import sys, random
-import time
-sensorData = serial.Serial('COM4',9600)     #115200)
+import numpy as np
 
-while(1):
-    while(sensorData.inWaiting()==0): # Wait here untill there is data on the Serial Port
-            pass                          # Do nothing, just loop until data arrives
-    textline = sensorData.readline()     # read the entire line of text
-    print textline#, dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
+k = []
+
+for t in range(5):
+    x = [t**2, t + 2]
+    x1 = [t**2, t + 4]
+    x2 = [t**2, t + 3]
+    k.append([x, x1, x2])
+
+for m in k:
+    print m[0]
+    print m[0][1]

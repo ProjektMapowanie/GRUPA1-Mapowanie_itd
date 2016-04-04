@@ -61,6 +61,7 @@ class Robot():
             self.V = 0
             self.teta = 1.5708   #teta in radians, 90 degree
             self.X = np.transpose(np.matrix([0, 0, 1.5708]))
+            self.landmark = np.matrix([[1, 2], [2,3]])
 
 
         def newStateB(self, V, w, dt): #velocity, rotation
@@ -88,9 +89,28 @@ class Robot():
             Xpredict = Ax + Bu
             return Xpredict
 
-        def predictObs(self):
+        def computeLandmarks(self, pomiar):
 
+            x1 = [self.X[0] + 4 + round(pomiar[0], 2), self.X[1]]
+            x2 = [self.X[0] - 1][self.X[1] + round(pomiar[1], 2) + 5]
+            x3 = [self.X[0] - 4 - round(pomiar[2], 2), self.X[1] - 1]
+            self.landmark.append([x1, x2, x3])
             pass
+
+
+        def predictObs(self, landmark):
+            predictDistance = []            #mam watpliwosci czy to ma sens. Aktualnie estymujemy odleglosc miedzy pRobotem, a
+                                            #wczesniej zmierzonymi landmarkami
+                                            # i jakby to mialo wygladac? sprawdzamy, czy ktore sie pokrywa?
+            for lm in range(landmark):
+                predictDistance.append(math.sqrt((self.X[0] - lm[0])**2 + (self.X[1] - lm[1])**2))
+            return predictDistance
+
+        def Step(self):
+
+            #predict step
+            Xpredict = self.predictState()
+            Zpredict = self.predictObs(self.landmark)
 
 
 def recv():
@@ -101,11 +121,6 @@ def recv():
 def main():
     robot = Robot()
     robot.predictState()
-
-
-
-
-
 
 
 if __name__ == "__main__":
