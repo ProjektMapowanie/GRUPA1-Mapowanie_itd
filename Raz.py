@@ -67,8 +67,6 @@ class Obserwator:
         if rozkaz == "p":
             self.y += 1
 
-obserw = Obserwator()
-obserw.szachownica()
 
 class Robot(QMainWindow):
 
@@ -88,14 +86,14 @@ class Robot(QMainWindow):
             textline = sensorData.readline()     # read the entire line of text
             dataNums=textline.split(',')       #Remember to split the line of text into an array at the commas
 
-            print textline
+            self.plik.write(dataNums[0], dataNums[2], dataNums[4], "\n")
             print dataNums[0], dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
             obserw.wpisz([int(round(float(dataNums[0])), int(round(float(dataNums[2]))), int(round(float(dataNums[4]))))])
 
             rozkaz =raw_input("podaj rozkaz")
             if rozkaz != "q":
                 obserw.wykonajRozkaz(rozkaz)
-            sensorData.close()
+            sensorData.reset_input_buffer()
         obserw.drukujTab()
 
 
@@ -124,7 +122,7 @@ class Robot(QMainWindow):
             timer.start(1000)
 
         def compute_initial_figure(self):
-             self.axes.imshow(obserw.mojaTablica, interpolation='nearest')
+             self.axes.imshow(self.obserw.mojaTablica, interpolation='nearest')
 
 
 
@@ -145,9 +143,17 @@ class Robot(QMainWindow):
             self.draw()#plt.show()
 
 
+    def przesun(self):
+        self.dzialanie()
+        pass
+
 
     def __init__(self, parent=None):
 
+        self.obserw = Obserwator()
+
+
+        self.plik = open('plik.txt', 'w')
         QMainWindow.__init__(self)
         self.ui = QMainWindow()
         uic.loadUi('untitled.ui', self)
@@ -156,7 +162,7 @@ class Robot(QMainWindow):
         sc = self.MyDynamicMplCanvas(self.ui, width=8, height=4, dpi=100)
         #sc = self.MyDynamicMplCanvas(self.ui, width=6, height=6, dpi=100)
         l.addWidget(sc)
-        #self.ui.PRZESUN.clicked.connect(self.przesun)
+        self.ui.PRZESUN.clicked.connect(self.przesun)
 
         self.show()
 
