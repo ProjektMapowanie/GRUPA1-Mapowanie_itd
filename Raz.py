@@ -90,7 +90,7 @@ class Robot(QMainWindow):
 
             print textline
             print dataNums[0], dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
-            obserw.wpisz([int(round(float(dataNums[0])), int(round(float(dataNums[2]))), int(round(float(dataNums[4]))) )])
+            obserw.wpisz([int(round(float(dataNums[0])), int(round(float(dataNums[2]))), int(round(float(dataNums[4]))))])
 
             rozkaz =raw_input("podaj rozkaz")
             if rozkaz != "q":
@@ -131,12 +131,12 @@ class Robot(QMainWindow):
 
         def update_figure(self):
 
-            textline = sensorData.readline()     # read the entire line of text
-            dataNums=textline.split(',')       #Remember to split the line of text into an array at the commas
+            textline = sensorData.readline()
+            dataNums=textline.split(',')
 
 
             print textline
-            print dataNums[0], dataNums[2], dataNums[4]      # Make variables for Red, Blue, Green. Remember
+            print dataNums[0], dataNums[2], dataNums[4]
             obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
 
             sensorData.reset_input_buffer()
@@ -156,7 +156,7 @@ class Robot(QMainWindow):
         sc = self.MyDynamicMplCanvas(self.ui, width=8, height=4, dpi=100)
         #sc = self.MyDynamicMplCanvas(self.ui, width=6, height=6, dpi=100)
         l.addWidget(sc)
-        #sc = self.MyStaticMplCanvas(self.main_widget, width=5, height=4, dpi=100)
+        #self.ui.PRZESUN.clicked.connect(self.przesun)
 
         self.show()
 
