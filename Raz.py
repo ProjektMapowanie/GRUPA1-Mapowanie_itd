@@ -90,9 +90,7 @@ class Robot(QMainWindow):
             print dataNums[0], dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
             obserw.wpisz([int(round(float(dataNums[0])), int(round(float(dataNums[2]))), int(round(float(dataNums[4]))))])
 
-            rozkaz =raw_input("podaj rozkaz")
-            if rozkaz != "q":
-                obserw.wykonajRozkaz(rozkaz)
+
             sensorData.reset_input_buffer()
         obserw.drukujTab()
 
@@ -106,9 +104,8 @@ class Robot(QMainWindow):
             # We want the axes cleared every time plot() is called
             self.axes.hold(False)
 
-            self.compute_initial_figure()
+            #self.compute_initial_figure()
 
-            #
             FigureCanvas.__init__(self, fig)
             self.setParent(parent)
 
@@ -135,11 +132,11 @@ class Robot(QMainWindow):
 
             print textline
             print dataNums[0], dataNums[2], dataNums[4]
-            obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
+            self.obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
 
             sensorData.reset_input_buffer()
 
-            self.axes.imshow(obserw.mojaTablica, interpolation='nearest')
+            self.axes.imshow(self.obserw.mojaTablica, interpolation='nearest')
             self.draw()#plt.show()
 
 
@@ -162,7 +159,7 @@ class Robot(QMainWindow):
         sc = self.MyDynamicMplCanvas(self.ui, width=8, height=4, dpi=100)
         #sc = self.MyDynamicMplCanvas(self.ui, width=6, height=6, dpi=100)
         l.addWidget(sc)
-        self.ui.PRZESUN.clicked.connect(self.przesun)
+        #self.ui.WCISK.clicked.connect(self.przesun)
 
         self.show()
 

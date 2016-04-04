@@ -57,8 +57,8 @@ def main():
 #while True: #This is a while loop that will loop forever, since True is always True.
 
     obserw = Obserwator()
-    obserw.szachownica()
 
+    plik = open('plik.txt', 'w')
 
     i = 0
     rozkaz =raw_input("podaj rozkaz:")
@@ -73,12 +73,15 @@ def main():
         print textline
         print dataNums[0], dataNums[2], dataNums[4]      # Make variables for Red, Blue, Green. Remember
         obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
-
+        tekst = dataNums[0] + dataNums[2] + dataNums[4] +"\n"
+        plik.write(tekst)
         rozkaz =raw_input("podaj rozkaz")
         if rozkaz != "q":
             obserw.wykonajRozkaz(rozkaz)
+
         sensorData.reset_input_buffer()
 
+    plik.close()
     obserw.drukujTab()
 
 
