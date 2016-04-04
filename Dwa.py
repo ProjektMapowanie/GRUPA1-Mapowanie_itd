@@ -1,6 +1,6 @@
 import serial as serial
 import time
-sensorData = serial.Serial('COM4',9600)#115200)
+
 #sensorData= serial.Serial('com11',115200) # Create senorData object to read serial port data coming from arduino
 import matplotlib.pyplot as plt
 
@@ -59,8 +59,16 @@ def Robot():
         self.teta = 0
 
 def main():
-#while True: #This is a while loop that will loop forever, since True is always True.
 
+    pass
+
+
+if __name__ == "__main__":
+    main()
+
+
+def starymain():
+    sensorData = serial.Serial('COM4', 9600)
     obserw = Obserwator()
 
     plik = open('plik.txt', 'w')
@@ -88,8 +96,3 @@ def main():
 
     plik.close()
     obserw.drukujTab()
-
-
-
-if __name__ == "__main__":
-    main()
