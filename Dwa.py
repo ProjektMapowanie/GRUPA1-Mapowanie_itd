@@ -51,7 +51,12 @@ class Obserwator:
 
 
 
-
+def Robot():
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.V = 0
+        self.teta = 0
 
 def main():
 #while True: #This is a while loop that will loop forever, since True is always True.
@@ -71,9 +76,9 @@ def main():
 
 
         print textline
-        print dataNums[0], dataNums[2], dataNums[4]      # Make variables for Red, Blue, Green. Remember
-        obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
-        tekst = dataNums[0] + dataNums[2] + dataNums[4] +"\n"
+        #print dataNums[0], dataNums[2], dataNums[4]      # Make variables for Red, Blue, Green. Remember
+        #obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
+        tekst = textline +"\n"
         plik.write(tekst)
         rozkaz =raw_input("podaj rozkaz")
         if rozkaz != "q":
