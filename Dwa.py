@@ -110,7 +110,7 @@ class Robot():
 
             #predict step
             Xpredict = self.predictState()
-            Zpredict = self.predictObs(self.landmark)
+            Zpredict = self.predictObs(self.landmark)   #wysylamy calega liste, czy tylko ostatnio obliczone?
 
 
 def recv():
