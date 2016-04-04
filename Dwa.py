@@ -1,5 +1,6 @@
 import serial as serial
-import time
+import math
+import numpy as np
 
 #sensorData= serial.Serial('com11',115200) # Create senorData object to read serial port data coming from arduino
 import matplotlib.pyplot as plt
@@ -51,16 +52,60 @@ class Obserwator:
 
 
 
-def Robot():
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.V = 0
-        self.teta = 0
+
+class Robot():
+        def __init__(self):
+
+            self.x = 0
+            self.y = 0
+            self.V = 0
+            self.teta = 1.5708   #teta in radians, 90 degree
+            self.X = np.transpose(np.matrix([0, 0, 1.5708]))
+
+
+        def newStateB(self, V, w, dt): #velocity, rotation
+            if not w == 0:
+                x = V/w*math.sin(self.teta) + V/w*math.sin(self.teta + w*dt) #self.X[0] -    #teta in radians
+                y = V/w*math.cos(self.teta) - V/w*math.cos(self.teta + w*dt) #self.X[1] +
+                teta = w*dt #self.X[2] +
+            else:
+                x = round(V*dt*math.sin(self.X[2]), 2)# + self.X[0]
+                y = round(V*dt*math.cos(self.X[2]), 2)# + self.X[1]
+                teta = 0
+            tab = np.matrix([x, y, teta])
+
+            return np.transpose(tab)
+
+        def newStateA(self):
+            A = np.identity(3)
+            #stan = np.transpose(np.array([self.x, self.y, self.teta]))
+            return A*self.X
+
+
+        def predictState(self):
+            Bu = self.newStateB(1, 0, 1)
+            Ax = self.newStateA()
+            Xpredict = Ax + Bu
+            return Xpredict
+
+        def predictObs(self):
+
+            pass
+
+
+def recv():
+    pass
+
+
 
 def main():
+    robot = Robot()
+    robot.predictState()
 
-    pass
+
+
+
+
 
 
 if __name__ == "__main__":

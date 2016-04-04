@@ -1,11 +1,10 @@
-import matplotlib.pyplot as plt
-dlugoscTablicy = 5
-tab = [[0 for col in range(dlugoscTablicy)] for row in range(dlugoscTablicy)]
-tab[0][1] = 40
-tab[0][2] = 10
-tab[0][3] = 20
-tab[2][1] = 45
+import serial as serial
+import sys, random
+import time
+sensorData = serial.Serial('COM4',9600)     #115200)
 
-plt.imshow(tab, interpolation='nearest')
-plt.show()
-print"vuvuv"
+while(1):
+    while(sensorData.inWaiting()==0): # Wait here untill there is data on the Serial Port
+            pass                          # Do nothing, just loop until data arrives
+    textline = sensorData.readline()     # read the entire line of text
+    print textline#, dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
