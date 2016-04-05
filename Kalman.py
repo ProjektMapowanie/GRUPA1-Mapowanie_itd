@@ -1,4 +1,4 @@
-import serial as serial
+#import serial as serial
 import math
 import numpy as np
 
@@ -56,12 +56,12 @@ class Obserwator:
 class Robot():
         def __init__(self):
 
-            self.x = 0
-            self.y = 0
-            self.V = 0
-            self.teta = 1.5708   #teta in radians, 90 degree
-            self.X = np.transpose(np.matrix([0, 0, 1.5708]))
-            self.landmark = np.matrix([[1, 2], [2,3]])
+            x = 0
+            y = 0
+            teta = 1.5708   #teta in radians, 90 degree
+            self.X = np.transpose(np.matrix([x, y, teta]))
+            self.PastStates = []
+            self.landmark = ([[1, 2], [2,3]])
 
 
         def newStateB(self, V, w, dt): #velocity, rotation
@@ -82,14 +82,13 @@ class Robot():
             #stan = np.transpose(np.array([self.x, self.y, self.teta]))
             return A*self.X
 
-
         def predictState(self):
             Bu = self.newStateB(1, 0, 1)
             Ax = self.newStateA()
             Xpredict = Ax + Bu
             return Xpredict
 
-        def computeLandmarks(self, pomiar):
+        def computeLandmarksFromSensors(self, pomiar):
 
             x1 = [self.X[0] + 4 + round(pomiar[0], 2), self.X[1]]
             x2 = [self.X[0] - 1][self.X[1] + round(pomiar[1], 2) + 5]
@@ -97,20 +96,72 @@ class Robot():
             self.landmark.append([x1, x2, x3])
             pass
 
-
         def predictObs(self, landmark):
             predictDistance = []            #mam watpliwosci czy to ma sens. Aktualnie estymujemy odleglosc miedzy pRobotem, a
                                             #wczesniej zmierzonymi landmarkami
                                             # i jakby to mialo wygladac? sprawdzamy, czy ktore sie pokrywa?
-            for lm in range(landmark):
+            for lm in landmark:
                 predictDistance.append(math.sqrt((self.X[0] - lm[0])**2 + (self.X[1] - lm[1])**2))
             return predictDistance
 
+        def aprioriCovarianceMatric(self):     #moze zamienic na klase lub fikusniej: funkcje z domknieciem
+                                        #dekorator @cache?
+
+            X = 0           #inicjalizacja
+            Y = 0
+            teta = 0
+                #dla xow
+            Exx = 0
+            Exy = 0
+            Ext = 0
+                #dla yow
+            Eyy = 0
+            Eyt = 0
+                #dla xow
+            Ett = 0
+
+            for state in self.PastStates:       #licz i sumuj tak by bylo to co potrzebne
+                                                #state : 0 - x, 1 - y,  2 - z
+                X = X + state[0]
+                Y = Y + state[1]
+                teta = teta + state[2]
+
+                Exx = Exx + state[0]**2
+                Exy = Exy + state[0]*state[1]
+                Ext = Ext + state[0]*state[2]
+
+                Eyy = Eyy + state[1]*state[1]
+                Eyt = Eyt + state[1]*state[2]
+
+                Ett = Ett + state[2]*state[2]
+
+            aX = X/self.PastStates.__len__()
+            aY = Y/self.PastStates.__len__()
+            aT = teta/self.PastStates.__len__()
+
+            covxx = Exx - aX**2
+            covxy = Exy - aX*aY
+            covxt = Ext - aX*aT
+
+            covyy = Eyy - aY**2
+            covyt = Eyt - aY*aT
+
+            covtt = Ett - aT**2
+
+            return np.matrix([[covxx, covxy, covxt],
+                             [covxy, covyy, covyt],
+                             [covxt, covyt, covtt]])
+
+
         def Step(self):
+            self.PastStates = [[0, 1, self.X[2]], [0, 3, self.X[2]], [0, 2, self.X[2]]]
 
             #predict step
+
             Xpredict = self.predictState()
             Zpredict = self.predictObs(self.landmark)
+            Epredict = self.aprioriCovarianceMatric()   #to ze wzoru, czy z AEA + R???
+
 
 
 def recv():
@@ -121,6 +172,7 @@ def recv():
 def main():
     robot = Robot()
     robot.predictState()
+    robot.Step()
 
 
 if __name__ == "__main__":

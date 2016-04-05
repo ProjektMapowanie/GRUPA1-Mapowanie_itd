@@ -1,13 +1,25 @@
 import numpy as np
 
-k = []
+def dlugosciStatku():
+            listadlug = [4, 4, 3, 2, 2, 1]
+            idx = {'i':0}
+            k = 0
 
-for t in range(5):
-    x = [t**2, t + 2]
-    x1 = [t**2, t + 4]
-    x2 = [t**2, t + 3]
-    k.append([x, x1, x2])
+            def jakadlugosc():
 
-for m in k:
-    print m[0]
-    print m[0][1]
+                if idx.get('i')< listadlug.__len__():
+                    dlugosc = listadlug[idx.get('i')]
+                    idx['i'] += 1
+                    k = 3
+                else:
+                    dlugosc = 0
+                return dlugosc
+            return jakadlugosc
+
+k = dlugosciStatku()
+m = k()
+n = k()
+n = k()
+n = k()
+print m, n
+
