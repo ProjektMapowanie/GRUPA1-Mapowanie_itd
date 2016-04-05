@@ -86,8 +86,7 @@ class Robot(QMainWindow):
             textline = sensorData.readline()     # read the entire line of text
             dataNums=textline.split(',')       #Remember to split the line of text into an array at the commas
 
-            self.plik.write(dataNums[0], dataNums[2], dataNums[4], "\n")
-            print dataNums[0]#, dataNums[2], dataNums[4]  # Make variables for Red, Blue, Green. Remember
+
             obserw.wpisz([int(round(float(dataNums[0])), int(round(float(dataNums[2]))), int(round(float(dataNums[4]))))])
 
 

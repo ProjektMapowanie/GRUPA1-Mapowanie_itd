@@ -159,6 +159,7 @@ class Robot():
             #predict step
 
             Xpredict = self.predictState()
+
             Zpredict = self.predictObs(self.landmark)
             Epredict = self.aprioriCovarianceMatric()   #to ze wzoru, czy z AEA + R???
 
@@ -180,7 +181,7 @@ if __name__ == "__main__":
 
 
 def starymain():
-    sensorData = serial.Serial('COM4', 9600)
+    #sensorData = serial.Serial('COM4', 9600)
     obserw = Obserwator()
 
     plik = open('plik.txt', 'w')
@@ -196,15 +197,3 @@ def starymain():
 
 
         print textline
-        #print dataNums[0], dataNums[2], dataNums[4]      # Make variables for Red, Blue, Green. Remember
-        #obserw.wpisz([float(dataNums[0]), float(dataNums[2]), float(dataNums[4])])
-        tekst = textline +"\n"
-        plik.write(tekst)
-        rozkaz =raw_input("podaj rozkaz")
-        if rozkaz != "q":
-            obserw.wykonajRozkaz(rozkaz)
-
-        sensorData.reset_input_buffer()
-
-    plik.close()
-    obserw.drukujTab()

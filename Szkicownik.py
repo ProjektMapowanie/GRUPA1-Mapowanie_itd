@@ -1,3 +1,4 @@
+
 import numpy as np
 
 def dlugosciStatku():
@@ -22,4 +23,3 @@ n = k()
 n = k()
 n = k()
 print m, n
-
