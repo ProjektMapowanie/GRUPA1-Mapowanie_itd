@@ -196,4 +196,4 @@ def starymain():
         dataNums=textline.split(',')       #Remember to split the line of text into an array at the commas
 
 
-        print textline
+        print (textline)
